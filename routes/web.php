@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\testController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,8 +28,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('test/{param1}', [testController::class, 'test']);
+
 Route::resource('chirps', ChirpController::class)
     ->only(['index','store','update','destroy'])
+    ->middleware(['auth','verified']);
+
+Route::resource('pokemon', PokemonController::class)
+    ->only(['index'])
     ->middleware(['auth','verified']);
 
 Route::get('/dashboard', function () {
